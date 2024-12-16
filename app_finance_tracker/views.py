@@ -41,5 +41,13 @@ def delete_line(request):
     #return redirect('/tables', error_message)
     
 def table(request, id):
-    print(id)
-    return render(request, 'table_data.html', {'id': id})
+    
+    main_row = get_object_or_404(Table, pk=id)
+    user = main_row.user
+    table_name = main_row.table_name
+
+    return render(request, 'table_data.html', {
+        'id': id,
+        'user': user,
+        'table_name': table_name
+        })
