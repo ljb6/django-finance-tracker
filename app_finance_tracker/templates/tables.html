@@ -80,12 +80,10 @@
                       {% csrf_token %}
                       <h3 class="text-center">Delete Line</h3>
                   
-                      <!-- Campos de entrada -->
                       <div class="mb-3">
                         <input type="number" name="line_id" class="form-control" placeholder="Enter Line #ID" required>
                       </div>
                   
-                      <!-- Botões -->
                       <button type="submit" class="btn btn-danger w-100 mb-2">Delete</button>
                       <button type="button" class="btn btn-secondary w-100" onclick="closeForm()">Cancel</button>
                     </form>
@@ -102,12 +100,10 @@
 </html>
 
 <script>
-    // Abre o formulário
     function openForm() {
       document.getElementById("myForm").style.display = "block";
     }
   
-    // Fecha o formulário
     function closeForm() {
       document.getElementById("myForm").style.display = "none";
     }

@@ -10,7 +10,6 @@ class Tracker(models.Model):
     id = models.IntegerField()
     user = models.TextField(max_length=80)
     date = models.DateField()
-    id = models.IntegerField()
     category = models.TextField()
     description = models.TextField()
     amount = models.IntegerField()

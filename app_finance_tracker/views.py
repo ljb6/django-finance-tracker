@@ -46,6 +46,15 @@ def table(request, id):
     user = main_row.user
     table_name = main_row.table_name
 
+    try:
+        extract = Tracker.objects.filter(id=id)
+        print('success')
+        for row in extract:
+            print(row)
+    except:
+        print('error')
+    
+
     return render(request, 'table_data.html', {
         'id': id,
         'user': user,

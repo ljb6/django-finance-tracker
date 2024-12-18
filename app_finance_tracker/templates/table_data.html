@@ -1,61 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Table - {{ id }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
-<body>
-    <section>
-        <nav class="navbar navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Personal Finance Tracker</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="/">Create Table</a>
-                        <a class="nav-link" href="/tables">Tables</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="container mt-4">
-            <h2>{{ table_name }}</h2>
-            <div class="btn-group mt-2" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-custom" for="btnradio1">Visualize</label>
-              
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-custom" for="btnradio2">Income</label>
-              
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-custom" for="btnradio3">Expenses</label>
-              </div>
-        </div>
-    </section>
-</body>
-</html>
-<style>
-    .btn-custom {
-    background-color: #FFFFFF; /* Cor preenchida */
-    color: #2B2F33; /* Texto em branco */
-    border-color: #1E2124;
-  }
-  
-  .btn-check:checked + .btn-custom {
-    background-color: #2B2F33; /* Tom levemente mais claro para o ativo */
-    border-color: #2B2F33;
-    color: #FFFFFF;
-  }
-  
-  .btn-custom:hover {
-    background-color: #383C40; /* Cor mais clara ao passar o mouse */
-    border-color: #383C40;
-    color: #FFFFFF;
-  }
-</style>  
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
+  <style>
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1050; /* Para garantir que o formulário fique acima de outros elementos */
+    }
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1050;
+    }
+
+    .btn-custom {
+      background-color: #ffffff; /* Cor preenchida */
+      color: #2b2f33; /* Texto em branco */
+      border-color: #1e2124;
+    }
+
+    .btn-check:checked + .btn-custom {
+      background-color: #2b2f33; /* Tom levemente mais claro para o ativo */
+      border-color: #2b2f33;
+      color: #ffffff;
+    }
+
+    .btn-custom:hover {
+      background-color: #383c40; /* Cor mais clara ao passar o mouse */
+      border-color: #383c40;
+      color: #ffffff;
+    }
+  </style>
+
+  <body>
+    <section>
+      <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Personal Finance Tracker</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link" href="/">Create Table</a>
+              <a class="nav-link" href="/tables">Tables</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container mt-4">
+        <h2>{{ table_name }}</h2>
+        <div
+          class="btn-group mt-2"
+          role="group"
+          aria-label="Basic radio toggle button group"
+        >
+          <input
+            type="radio"
+            class="btn-check"
+            name="btnradio"
+            id="btnradio1"
+            autocomplete="off"
+            checked
+          />
+          <label class="btn btn-custom" for="btnradio1">Visualize</label>
+
+          <input
+            type="radio"
+            class="btn-check"
+            name="btnradio"
+            id="btnradio2"
+            autocomplete="off"
+          />
+          <label class="btn btn-custom" for="btnradio2">Income</label>
+
+          <input
+            type="radio"
+            class="btn-check"
+            name="btnradio"
+            id="btnradio3"
+            autocomplete="off"
+          />
+          <label class="btn btn-custom" for="btnradio3">Expenses</label>
+        </div>
+        <button class="btn btn-secondary mt-2" onclick="openForm()">
+          Add value
+        </button>
+      </div>
+      <div class="form-popup bg-white p-3 border rounded" id="myForm">
+        <form action="" method="post" class="form-container">
+          {% csrf_token %}
+          <h3 class="text-center">Add income or expense</h3>
+
+          <div class="form-check">
+            <div
+              class="btn-group container"
+              role="group"
+              aria-label="Basic radio toggle button group"
+            >
+              <input
+                type="radio"
+                class="btn-check"
+                name="btnradio"
+                id="btnradio4"
+                autocomplete="off"
+              />
+              <label class="btn btn-custom" for="btnradio4">Income</label>
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="btnradio"
+                id="btnradio5"
+                autocomplete="off"
+              />
+              <label class="btn btn-custom" for="btnradio5">Expense</label>
+            </div>
+
+            <h6>Amount</h6>
+            <div class="input-group mb-3">
+              <span class="input-group-text">$</span>
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Amount (to the nearest dollar)"
+              />
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-danger w-100 mb-2">
+            Delete
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary w-100"
+            onclick="closeForm()"
+          >
+            Cancel
+          </button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
+
+<script>
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+</script>
