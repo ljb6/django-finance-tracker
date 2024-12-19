@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
-from django.contrib import messages
 from .models import Table, Tracker
+
+from datetime import datetime
 
 def home(request):
     return render(request, 'home.html')
@@ -38,7 +39,6 @@ def delete_line(request):
         print('error')
 
     return render(request, 'tables.html', {'tables': Table.objects.all(), 'error_message': delete_line_message})
-    #return redirect('/tables', error_message)
     
 def table(request, id):
     
@@ -46,10 +46,13 @@ def table(request, id):
     user = main_row.user
     table_name = main_row.table_name
 
+    total_income = 0
+
     try:
         extract = Tracker.objects.filter(id=id)
         print('success')
         for row in extract:
+            total_income += row.amount
             print(row)
     except:
         print('error')
@@ -58,5 +61,19 @@ def table(request, id):
     return render(request, 'table_data.html', {
         'id': id,
         'user': user,
-        'table_name': table_name
+        'table_name': table_name,
+        'total_income': total_income
         })
+
+def add_transaction(request):
+    new_transaction = Tracker()
+    new_transaction.id = request.POST.get('id')
+    new_transaction.date = datetime.now()
+    new_transaction.type = request.POST.get('type')
+    new_transaction.category = request.POST.get('category')
+    new_transaction.description = request.POST.get('description')
+    new_transaction.amount = request.POST.get('amount')
+    new_transaction.save()
+
+    return render(request, 'home.html')
+

@@ -71,7 +71,7 @@
                 <div class="d-flex gap-2">
                     <form action="{% url 'delete_tables' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger" >Delete tables</button>
+                        <button type="submit" class="btn btn-danger" >Delete all</button>
                     </form>
                     <button class="btn btn-warning" onclick="openForm()">Delete line</button>
                 </div>

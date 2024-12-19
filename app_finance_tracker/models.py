@@ -12,4 +12,4 @@ class Tracker(models.Model):
     type = models.TextField()
     category = models.TextField()
     description = models.TextField()
-    amount = models.IntegerField()
+    amount = models.IntegerField()  
