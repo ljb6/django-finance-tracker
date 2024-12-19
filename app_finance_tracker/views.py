@@ -26,6 +26,7 @@ def tables(request):
 
 def delete_tables(request):
     Table.objects.all().delete()
+    Tracker.objects.all().delete()
     return redirect('/tables') 
 
 def delete_line(request):
@@ -53,6 +54,7 @@ def table(request, id):
     try:
         extract = Tracker.objects.filter(id=id)
         print('success')
+
         for row in extract:
             if row.type == 'Income':
                 total_income += row.amount
@@ -67,6 +69,7 @@ def table(request, id):
         'user': user,
         'table_name': table_name,
         'total_income': total_income,
+        'total_expenses': total_expenses,
         'extract': extract
         })
 
