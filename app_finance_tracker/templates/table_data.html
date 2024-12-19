@@ -100,6 +100,7 @@
             name="btnradio"
             id="btnradio2"
             autocomplete="off"
+            onclick="showElement('incomeTable'), hideElement('expensesTable')"
           />
           <label class="btn btn-custom" for="btnradio2">Income</label>
 
@@ -109,56 +110,157 @@
             name="btnradio"
             id="btnradio3"
             autocomplete="off"
+            onclick="showElement('expensesTable'), hideElement('incomeTable')"
           />
           <label class="btn btn-custom" for="btnradio3">Expenses</label>
         </div>
-        <button class="btn btn-secondary mt-2" onclick="openForm()">
+        <button class="btn btn-secondary mt-2" onclick="showElement('myForm')">
           Add value
         </button>
         <form action="{% url 'clear_transactions' %}" method="post">
           {% csrf_token %}
           <!--invisible data-->
-          <input type="hidden" name="id" value="{{ id }}">
-          <button class="btn btn-danger mt-2">
-            Clear transactions
-          </button>
+          <input type="hidden" name="id" value="{{ id }}" />
+          <button class="btn btn-danger mt-2">Clear transactions</button>
         </form>
       </div>
-      <div class="container mt-4">
-        <h2>Total income</h2>
-        <h2>{{ total_income }}</h2>
+      <!--page content-->
+      <div id="incomeTable">
+        <table class="table container mt-2">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Category</th>
+              <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in extract %}
+            <tr>
+              <td>{{ row.date }}</td>
+              <td>{{ row.category }}</td>
+              <td>{{ row.description }}</td>
+              <td>{{ row.amount }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
+      <div id="expensesTable">
+        <table class="table container mt-2" >
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Category</th>
+              <th scope="col">Description</th>
+              <th scope="col">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in extract %}
+            <tr>
+              <td>{{ row.date }}</td>
+              <td>{{ row.category }}</td>
+              <td>{{ row.description }}</td>
+              <td>{{ row.amount }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
       <!--popup-->
-      <div class="form-popup bg-white p-4 border rounded mx-auto" id="myForm" style="max-width: 400px;">
-        <form action="{% url 'add_transaction' %}" method="post" class="form-container">
+      <div
+        class="form-popup bg-white p-4 border rounded mx-auto"
+        id="myForm"
+        style="max-width: 400px"
+      >
+        <form
+          action="{% url 'add_transaction' %}"
+          method="post"
+          class="form-container"
+        >
           {% csrf_token %}
 
           <!--invisible data-->
-          <input type="hidden" name="id" value="{{ id }}">
+          <input type="hidden" name="id" value="{{ id }}" />
 
           <h3 class="text-center mb-4">Add Income or Expense</h3>
-      
+
           <div class="mb-3">
             <label class="form-label d-block">Type</label>
-            <div class="btn-group w-100" name="type" role="group" aria-label="Income or Expense">
-              <input type="radio" class="btn-check" name="type" id="btnradio4" autocomplete="off" value="Income"/>
-              <label class="btn btn-outline-success w-50" for="btnradio4">Income</label>
-      
-              <input type="radio" class="btn-check" name="type" id="btnradio5" autocomplete="off" value="Expense"/>
-              <label class="btn btn-outline-danger w-50" for="btnradio5">Expense</label>
+            <div
+              class="btn-group w-100"
+              name="type"
+              role="group"
+              aria-label="Income or Expense"
+            >
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                id="btnradio4"
+                autocomplete="off"
+                value="Income"
+                required
+              />
+              <label class="btn btn-outline-success w-50" for="btnradio4"
+                >Income</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                id="btnradio5"
+                autocomplete="off"
+                value="Expense"
+                required
+              />
+              <label class="btn btn-outline-danger w-50" for="btnradio5"
+                >Expense</label
+              >
             </div>
           </div>
-      
+
           <div class="mb-3">
             <label for="category" class="form-label">Options</label>
             <select class="form-select" id="category" name="category">
-              <option selected>Choose...</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="Salary or wages">Salary or wages</option>
+              <option value="Business income">Business income</option>
+              <option value="Investments">Investments</option>
+              <option value="Rental income">Rental income</option>
+              <option value="Pension or retirement fund">
+                Pension or retirement fund
+              </option>
+              <option value="Rent or mortgage">Rent or mortgage</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Food">Food</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Household necessities">
+                Household necessities
+              </option>
+              <option value="Medical expenses">Medical expenses</option>
+              <option value="Educational expenses">Educational expenses</option>
+              <option value="Loan payments">Loan payments</option>
+              <option value="Taxes">Taxes</option>
+              <option value="Amount allocated to savings/retirement">
+                Amount allocated to savings/retirement
+              </option>
+              <option value="Automobile maintenance">
+                Automobile maintenance
+              </option>
+              <option value="Insurance (health and property)">
+                Insurance (health and property)
+              </option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Vacations">Vacations</option>
+              <option value="Servants">Servants</option>
+              <option value="Other">Other</option>
             </select>
           </div>
-      
+
           <div class="mb-3">
             <label for="descriptionInput" class="form-label">Description</label>
             <input
@@ -167,9 +269,10 @@
               id="description"
               class="form-control"
               aria-label="Description"
+              placeholder="Optional"
             />
           </div>
-      
+
           <div class="mb-3">
             <label for="amount" class="form-label">Amount</label>
             <div class="input-group">
@@ -180,28 +283,31 @@
                 id="amount"
                 class="form-control"
                 aria-label="Amount (to the nearest dollar)"
+                required
               />
               <span class="input-group-text">.00</span>
             </div>
           </div>
-      
           <button type="submit" class="btn btn-primary w-100 mb-2">Add</button>
-          <button type="button" class="btn btn-secondary w-100" onclick="closeForm()">Cancel</button>
+          <button
+            type="button"
+            class="btn btn-secondary w-100"
+            onclick="hideElement('myForm')"
+          >
+            Cancel
+          </button>
         </form>
       </div>
-      
-      
-      
     </section>
   </body>
 </html>
 
 <script>
-  function openForm() {
-    document.getElementById("myForm").style.display = "block";
+  function showElement(id) {
+    document.getElementById(id).style.display = "block";
   }
 
-  function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+  function hideElement(id) {
+    document.getElementById(id).style.display = "none";
   }
 </script>

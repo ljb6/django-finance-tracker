@@ -66,7 +66,8 @@ def table(request, id):
         'id': id,
         'user': user,
         'table_name': table_name,
-        'total_income': total_income
+        'total_income': total_income,
+        'extract': extract
         })
 
 def add_transaction(request):
