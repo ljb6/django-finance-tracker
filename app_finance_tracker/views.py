@@ -47,13 +47,17 @@ def table(request, id):
     table_name = main_row.table_name
 
     total_income = 0
+    total_expenses = 0
+    current_money = total_income - total_expenses
 
     try:
         extract = Tracker.objects.filter(id=id)
         print('success')
         for row in extract:
-            total_income += row.amount
-            print(row)
+            if row.type == 'Income':
+                total_income += row.amount
+            else:
+                total_expenses += row.amount
     except:
         print('error')
     
@@ -66,8 +70,10 @@ def table(request, id):
         })
 
 def add_transaction(request):
+    id = request.POST.get('id')
+
     new_transaction = Tracker()
-    new_transaction.id = request.POST.get('id')
+    new_transaction.id = id
     new_transaction.date = datetime.now()
     new_transaction.type = request.POST.get('type')
     new_transaction.category = request.POST.get('category')
@@ -75,5 +81,12 @@ def add_transaction(request):
     new_transaction.amount = request.POST.get('amount')
     new_transaction.save()
 
-    return render(request, 'home.html')
+    return redirect('/table/'+str(id))
 
+def clear_transactions(request):
+    id = request.POST.get('id')
+    rows = Tracker.objects.filter(id=id)
+    for row in rows:
+        row.delete()
+
+    return redirect('/table/'+str(id))

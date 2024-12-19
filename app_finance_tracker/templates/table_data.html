@@ -115,6 +115,14 @@
         <button class="btn btn-secondary mt-2" onclick="openForm()">
           Add value
         </button>
+        <form action="{% url 'clear_transactions' %}" method="post">
+          {% csrf_token %}
+          <!--invisible data-->
+          <input type="hidden" name="id" value="{{ id }}">
+          <button class="btn btn-danger mt-2">
+            Clear transactions
+          </button>
+        </form>
       </div>
       <div class="container mt-4">
         <h2>Total income</h2>
@@ -132,11 +140,11 @@
       
           <div class="mb-3">
             <label class="form-label d-block">Type</label>
-            <div class="btn-group w-100" role="group" aria-label="Income or Expense">
-              <input type="radio" class="btn-check" name="type" id="btnradio4" autocomplete="off" />
+            <div class="btn-group w-100" name="type" role="group" aria-label="Income or Expense">
+              <input type="radio" class="btn-check" name="type" id="btnradio4" autocomplete="off" value="Income"/>
               <label class="btn btn-outline-success w-50" for="btnradio4">Income</label>
       
-              <input type="radio" class="btn-check" name="type" id="btnradio5" autocomplete="off" />
+              <input type="radio" class="btn-check" name="type" id="btnradio5" autocomplete="off" value="Expense"/>
               <label class="btn btn-outline-danger w-50" for="btnradio5">Expense</label>
             </div>
           </div>

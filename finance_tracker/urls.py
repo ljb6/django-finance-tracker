@@ -9,5 +9,6 @@ urlpatterns = [
     path('delete-tables', views.delete_tables, name='delete_tables'),
     path('delete-line', views.delete_line, name='delete_line'),
     path('table/<int:id>', views.table, name='table'),
-    path('add-transaction', views.add_transaction, name='add_transaction')
+    path('add-transaction', views.add_transaction, name='add_transaction'),
+    path('clear-transactions', views.clear_transactions, name='clear_transactions')
 ]
