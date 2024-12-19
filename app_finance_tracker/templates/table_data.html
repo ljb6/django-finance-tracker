@@ -116,60 +116,64 @@
           Add value
         </button>
       </div>
-      <div class="form-popup bg-white p-3 border rounded" id="myForm">
+      <!--popup-->
+      <div class="form-popup bg-white p-4 border rounded mx-auto" id="myForm" style="max-width: 400px;">
         <form action="" method="post" class="form-container">
           {% csrf_token %}
-          <h3 class="text-center">Add income or expense</h3>
-
-          <div class="form-check">
-            <div
-              class="btn-group container"
-              role="group"
-              aria-label="Basic radio toggle button group"
-            >
-              <input
-                type="radio"
-                class="btn-check"
-                name="btnradio"
-                id="btnradio4"
-                autocomplete="off"
-              />
-              <label class="btn btn-custom" for="btnradio4">Income</label>
-
-              <input
-                type="radio"
-                class="btn-check"
-                name="btnradio"
-                id="btnradio5"
-                autocomplete="off"
-              />
-              <label class="btn btn-custom" for="btnradio5">Expense</label>
+          <h3 class="text-center mb-4">Add Income or Expense</h3>
+      
+          <div class="mb-3">
+            <label class="form-label d-block">Type</label>
+            <div class="btn-group w-100" role="group" aria-label="Income or Expense">
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" />
+              <label class="btn btn-outline-success w-50" for="btnradio4">Income</label>
+      
+              <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" />
+              <label class="btn btn-outline-danger w-50" for="btnradio5">Expense</label>
             </div>
-
-            <h6>Amount</h6>
-            <div class="input-group mb-3">
+          </div>
+      
+          <div class="mb-3">
+            <label for="inputGroupSelect01" class="form-label">Options</label>
+            <select class="form-select" id="inputGroupSelect01">
+              <option selected>Choose...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+      
+          <div class="mb-3">
+            <label for="descriptionInput" class="form-label">Description</label>
+            <input
+              type="text"
+              id="descriptionInput"
+              class="form-control"
+              aria-label="Description"
+            />
+          </div>
+      
+          <div class="mb-3">
+            <label for="amountInput" class="form-label">Amount</label>
+            <div class="input-group">
               <span class="input-group-text">$</span>
               <input
                 type="text"
+                id="amountInput"
                 class="form-control"
                 aria-label="Amount (to the nearest dollar)"
               />
               <span class="input-group-text">.00</span>
             </div>
           </div>
-
-          <button type="submit" class="btn btn-danger w-100 mb-2">
-            Delete
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary w-100"
-            onclick="closeForm()"
-          >
-            Cancel
-          </button>
+      
+          <button type="submit" class="btn btn-primary w-100 mb-2">Add</button>
+          <button type="button" class="btn btn-secondary w-100" onclick="closeForm()">Cancel</button>
         </form>
       </div>
+      
+      
+      
     </section>
   </body>
 </html>

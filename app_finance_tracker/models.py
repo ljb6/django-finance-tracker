@@ -8,8 +8,8 @@ class Table(models.Model):
 class Tracker(models.Model):
     table_id = models.AutoField(primary_key=True)
     id = models.IntegerField()
-    user = models.TextField(max_length=80)
     date = models.DateField()
+    type = models.TextField()
     category = models.TextField()
     description = models.TextField()
     amount = models.IntegerField()
