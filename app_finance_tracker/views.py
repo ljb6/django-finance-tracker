@@ -3,8 +3,13 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import Table, Tracker
 
+import locale
 from datetime import datetime
-from .graphs import return_graph
+from .graphs import total_income_graph, total_expenses_graph
+
+locale.setlocale(locale.LC_ALL, 'C')
+def format_currency(amount):
+    return '${:,.2f}'.format(amount)
 
 def home(request):
     return render(request, "home.html")
@@ -56,7 +61,6 @@ def table(request, id):
 
     total_income = 0
     total_expenses = 0
-    current_money = total_income - total_expenses
 
     try:
         extract = Tracker.objects.filter(id=id)
@@ -70,7 +74,10 @@ def table(request, id):
     except:
         print("error")
 
-    graph = return_graph()
+    income_graph = total_income_graph(id)
+    expenses_graph = total_expenses_graph(id)
+
+    current_money = total_income - total_expenses
 
     return render(
         request,
@@ -79,10 +86,12 @@ def table(request, id):
             "id": id,
             "user": user,
             "table_name": table_name,
-            "total_income": total_income,
-            "total_expenses": total_expenses,
+            "total_income": format_currency(total_income),
+            "total_expenses": format_currency(total_expenses),
+            "current_money": format_currency(current_money),
             "extract": extract,
-            "graph": graph
+            "income_graph": income_graph,
+            "expenses_graph": expenses_graph
         },
     )
 
