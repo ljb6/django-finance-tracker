@@ -86,7 +86,7 @@
             name="btnradio"
             id="btnradio1"
             autocomplete="off"
-            onclick="hideElement('incomeTable'), hideElement('expensesTable')"
+            onclick="showElement('graphs'), hideElement('incomeTable'), hideElement('expensesTable')"
             checked />
           <label class="btn btn-custom" for="btnradio1">Visualize</label>
 
@@ -96,7 +96,7 @@
             name="btnradio"
             id="btnradio2"
             autocomplete="off"
-            onclick="showElement('incomeTable'), hideElement('expensesTable')" />
+            onclick="showElement('incomeTable'), hideElement('expensesTable'), hideElement('graphs')" />
           <label class="btn btn-custom" for="btnradio2">Income</label>
 
           <input
@@ -105,7 +105,7 @@
             name="btnradio"
             id="btnradio3"
             autocomplete="off"
-            onclick="showElement('expensesTable'), hideElement('incomeTable')" />
+            onclick="showElement('expensesTable'), hideElement('incomeTable'), hideElement('graphs')" />
           <label class="btn btn-custom" for="btnradio3">Expenses</label>
         </div>
         <button class="btn btn-secondary mt-2" onclick="showElement('myForm')">
@@ -114,7 +114,7 @@
       </div>
 
       <!--page content-->
-      <div class="container">
+      <div class="container" id="graphs">
         <div class="row">
           <div class="col-10 mt-4">
             <h2>Current money: {{ current_money }}</h2>

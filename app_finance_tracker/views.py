@@ -3,13 +3,8 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import Table, Tracker
 
-import locale
 from datetime import datetime
-from .graphs import total_income_graph, total_expenses_graph
-
-locale.setlocale(locale.LC_ALL, 'C')
-def format_currency(amount):
-    return '${:,.2f}'.format(amount)
+from .graphs import total_income_graph, total_expenses_graph, format_currency
 
 def home(request):
     return render(request, "home.html")
