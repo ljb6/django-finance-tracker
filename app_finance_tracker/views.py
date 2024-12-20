@@ -5,44 +5,51 @@ from .models import Table, Tracker
 
 from datetime import datetime
 
+
 def home(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
+
 
 def tables(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         new_table = Table()
-        new_table.user = request.POST.get('username')
-        new_table.table_name = request.POST.get('table_name')
+        new_table.user = request.POST.get("username")
+        new_table.table_name = request.POST.get("table_name")
         new_table.save()
-        return redirect('/tables')
+        return redirect("/tables")
     else:
         table = Table()
 
-    tables = {
-        'tables': Table.objects.all()
-    }
+    tables = {"tables": Table.objects.all()}
 
-    return render(request, 'tables.html', tables)   
+    return render(request, "tables.html", tables)
+
 
 def delete_tables(request):
     Table.objects.all().delete()
     Tracker.objects.all().delete()
-    return redirect('/tables') 
+    return redirect("/tables")
+
 
 def delete_line(request):
     try:
-        line_id = request.POST.get('line_id')
+        line_id = request.POST.get("line_id")
         row = get_object_or_404(Table, pk=line_id)
         row.delete()
         delete_line_message = "Line deleted."
     except:
         delete_line_message = "Enter a valid line id."
-        print('error')
+        print("error")
 
-    return render(request, 'tables.html', {'tables': Table.objects.all(), 'error_message': delete_line_message})
-    
+    return render(
+        request,
+        "tables.html",
+        {"tables": Table.objects.all(), "error_message": delete_line_message},
+    )
+
+
 def table(request, id):
-    
+
     main_row = get_object_or_404(Table, pk=id)
     user = main_row.user
     table_name = main_row.table_name
@@ -53,44 +60,49 @@ def table(request, id):
 
     try:
         extract = Tracker.objects.filter(id=id)
-        print('success')
+        print("success")
 
         for row in extract:
-            if row.type == 'Income':
+            if row.type == "Income":
                 total_income += row.amount
             else:
                 total_expenses += row.amount
     except:
-        print('error')
-    
+        print("error")
 
-    return render(request, 'table_data.html', {
-        'id': id,
-        'user': user,
-        'table_name': table_name,
-        'total_income': total_income,
-        'total_expenses': total_expenses,
-        'extract': extract
-        })
+    return render(
+        request,
+        "table_data.html",
+        {
+            "id": id,
+            "user": user,
+            "table_name": table_name,
+            "total_income": total_income,
+            "total_expenses": total_expenses,
+            "extract": extract,
+        },
+    )
+
 
 def add_transaction(request):
-    id = request.POST.get('id')
+    id = request.POST.get("id")
 
     new_transaction = Tracker()
     new_transaction.id = id
     new_transaction.date = datetime.now()
-    new_transaction.type = request.POST.get('type')
-    new_transaction.category = request.POST.get('category')
-    new_transaction.description = request.POST.get('description')
-    new_transaction.amount = request.POST.get('amount')
+    new_transaction.type = request.POST.get("type")
+    new_transaction.category = request.POST.get("category")
+    new_transaction.description = request.POST.get("description")
+    new_transaction.amount = request.POST.get("amount")
     new_transaction.save()
 
-    return redirect('/table/'+str(id))
+    return redirect("/table/" + str(id))
+
 
 def clear_transactions(request):
-    id = request.POST.get('id')
+    id = request.POST.get("id")
     rows = Tracker.objects.filter(id=id)
     for row in rows:
         row.delete()
 
-    return redirect('/table/'+str(id))
+    return redirect("/table/" + str(id))
