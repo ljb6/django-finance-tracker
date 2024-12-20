@@ -114,6 +114,8 @@
       </div>
 
       <!--page content-->
+      {{ graph|safe }}
+
       <div id="incomeTable" style="display: none" class="container">
         <table class="table mt-2">
           <thead>
@@ -131,7 +133,7 @@
               <td>{{ row.date }}</td>
               <td>{{ row.category }}</td>
               <td>{{ row.description }}</td>
-              <td>{{ row.amount }}</td>
+              <td>${{ row.amount }}</td>
             </tr>
             {% endif %}
             {% endfor %}
@@ -225,29 +227,19 @@
               <option value="Business income">Business income</option>
               <option value="Investments">Investments</option>
               <option value="Rental income">Rental income</option>
-              <option value="Pension or retirement fund">
-                Pension or retirement fund
-              </option>
+              <option value="Pension or retirement fund">Pension or retirement fund</option>
               <option value="Rent or mortgage">Rent or mortgage</option>
               <option value="Utilities">Utilities</option>
               <option value="Food">Food</option>
               <option value="Clothing">Clothing</option>
-              <option value="Household necessities">
-                Household necessities
-              </option>
+              <option value="Household necessities">Household necessities</option>
               <option value="Medical expenses">Medical expenses</option>
               <option value="Educational expenses">Educational expenses</option>
               <option value="Loan payments">Loan payments</option>
               <option value="Taxes">Taxes</option>
-              <option value="Amount allocated to savings/retirement">
-                Amount allocated to savings/retirement
-              </option>
-              <option value="Automobile maintenance">
-                Automobile maintenance
-              </option>
-              <option value="Insurance (health and property)">
-                Insurance (health and property)
-              </option>
+              <option value="Amount allocated to savings/retirement">Amount allocated to savings/retirement</option>
+              <option value="Automobile maintenance">Automobile maintenance</option>
+              <option value="Insurance (health and property)">Insurance (health and property)</option>
               <option value="Entertainment">Entertainment</option>
               <option value="Vacations">Vacations</option>
               <option value="Servants">Servants</option>

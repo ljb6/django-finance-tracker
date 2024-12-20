@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import Table, Tracker
 
 from datetime import datetime
-
+from .graphs import return_graph
 
 def home(request):
     return render(request, "home.html")
@@ -70,6 +70,8 @@ def table(request, id):
     except:
         print("error")
 
+    graph = return_graph()
+
     return render(
         request,
         "table_data.html",
@@ -80,6 +82,7 @@ def table(request, id):
             "total_income": total_income,
             "total_expenses": total_expenses,
             "extract": extract,
+            "graph": graph
         },
     )
 
@@ -106,3 +109,5 @@ def clear_transactions(request):
         row.delete()
 
     return redirect("/table/" + str(id))
+
+
